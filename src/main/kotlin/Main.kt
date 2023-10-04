@@ -1,3 +1,4 @@
+import Controller.SingletonConnection
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -26,6 +27,7 @@ fun App() {
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
+        SingletonConnection.GetDBConnection()
         App()
     }
 }
