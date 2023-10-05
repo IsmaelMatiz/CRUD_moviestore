@@ -15,7 +15,6 @@ public class SingletonConnection {
     public static Connection GetDBConnection() throws SQLException {
         connection = DriverManager.getConnection(url,user,password);
 
-        System.out.println(connection.isValid(0));
         return  connection;
     }
 }
