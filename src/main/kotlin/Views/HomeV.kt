@@ -23,8 +23,8 @@ class HomeV(): Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val movieScreen = rememberScreen(SharedScreen.moviesV)
-        val  LoanScreen = rememberScreen(SharedScreen.LoansV)
+        val movieScreen = rememberScreen(SharedScreen.MoviesV)
+        val loansScreen = rememberScreen(SharedScreen.LoansV)
 
         MaterialTheme {
             Column {
@@ -43,7 +43,8 @@ class HomeV(): Screen {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        menuButton("Loans",{navigator.push(LoanScreen)})
+
+                        menuButton("Loans",{navigator.push(loansScreen)})
                         menuButton("Movies",{navigator.push(movieScreen)})
                     }
                 }

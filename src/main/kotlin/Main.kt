@@ -34,10 +34,9 @@ fun main() = application {
             register<SharedScreen.HomeV> {
                 HomeV()
             }
-            register<SharedScreen.moviesV> {
+            register<SharedScreen.MoviesV> {
                 MoviesV()
             }
-
             register<SharedScreen.LoansV> {
                 LoansV()
             }
@@ -45,6 +44,5 @@ fun main() = application {
         Navigator(HomeV()) { navigator ->
             SlideTransition(navigator)
         }
-
     }
 }
