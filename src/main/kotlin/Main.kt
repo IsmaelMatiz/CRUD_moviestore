@@ -58,7 +58,9 @@ fun main() = application {
         title = storeName,
         icon = painterResource(logoPaht)
     ) {
-        SingletonConnection.GetDBConnection()
+
+
+
         App()
     }
 }
