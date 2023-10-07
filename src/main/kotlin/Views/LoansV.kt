@@ -1,13 +1,13 @@
 package Views
 
 import Header
-import menuButton
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.registry.rememberScreen
@@ -16,15 +16,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import navController.SharedScreen
 
-
-class HomeV(): Screen {
-
+class LoansV (): Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val movieScreen = rememberScreen(SharedScreen.moviesV)
-        val  LoanScreen = rememberScreen(SharedScreen.LoansV)
+        val homeScreen = rememberScreen(SharedScreen.HomeV)
 
         MaterialTheme {
             Column {
@@ -39,12 +36,15 @@ class HomeV(): Screen {
                 )
                 {
                     Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        menuButton("Loans",{navigator.push(LoanScreen)})
-                        menuButton("Movies",{navigator.push(movieScreen)})
+                            Button(onClick = {
+                            navigator.push(homeScreen)
+                        }){
+                            Text("Volver")
+                        }
+                        //aqui wey empieza aqui
+
                     }
                 }
             }
