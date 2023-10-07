@@ -11,6 +11,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+
     google()
 }
 
@@ -21,8 +22,22 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
 
-    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-    implementation("com.mysql:mysql-connector-j:8.1.0")
+
+    // https://mvnrepository.com/artifact/cafe.adriel.voyager/voyager-navigator
+    runtimeOnly("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
+
+    // https://mvnrepository.com/artifact/cafe.adriel.voyager/voyager-navigator-desktop
+    implementation("cafe.adriel.voyager:voyager-navigator-desktop:1.0.0-rc05")
+
+    // TabNavigator
+    implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0-rc05")
+
+    // https://mvnrepository.com/artifact/cafe.adriel.voyager/voyager-tab-navigator-desktop
+    implementation("cafe.adriel.voyager:voyager-tab-navigator-desktop:1.0.0-rc05")
+
+    // https://mvnrepository.com/artifact/cafe.adriel.voyager/voyager-transitions-desktop
+    implementation("cafe.adriel.voyager:voyager-transitions-desktop:1.0.0-rc05")
+
 
 }
 
