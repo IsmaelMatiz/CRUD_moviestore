@@ -1,4 +1,5 @@
 import Views.HomeV
+import Views.LoansV
 import Views.MoviesV
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.RowScope
@@ -33,8 +34,11 @@ fun main() = application {
             register<SharedScreen.HomeV> {
                 HomeV()
             }
-            register<SharedScreen.moviesV> {
+            register<SharedScreen.MoviesV> {
                 MoviesV()
+            }
+            register<SharedScreen.LoansV> {
+                LoansV()
             }
         }
         Navigator(HomeV()) { navigator ->
