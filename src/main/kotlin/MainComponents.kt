@@ -1,8 +1,10 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,8 +28,8 @@ fun prevComponents(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        menuButton("Loans")
-        menuButton("Movies")
+        menuButton("Loans",{})
+        menuButton("Movies",{})
     }
 }
 
@@ -44,7 +46,7 @@ fun Header(){
             .fillMaxWidth()
             .background(dBlue)
     ){
-        Box(){
+        Box {
             Text(
                 text = storeName,
                 style = TextStyle(fontFamily = FontFamily.Default,fontSize = 100.sp, color = Color.White, fontWeight = FontWeight.Bold),
@@ -62,15 +64,17 @@ fun Header(){
 
 
 @Composable
-fun menuButton(buttonText : String){
+fun menuButton(buttonText : String,moveTo: () -> Unit){
     Column(modifier = Modifier.padding(10.dp)) {
         Button(onClick = {
-
+            moveTo()
         },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent
             ),
-            modifier = Modifier.border(2.dp,Color.Gray)
+            shape = CutCornerShape(30.dp),
+            border = BorderStroke(2.dp,Color.Gray)
+
         ){
             Text(
                 text = buttonText,
