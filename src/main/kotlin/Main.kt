@@ -1,3 +1,5 @@
+import Controller.DAOCategorias
+import Controller.DAOMovies
 import Controller.SingletonConnection
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
