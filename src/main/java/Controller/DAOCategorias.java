@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DAOCategorias {
 
-    public List<DTOCategorias> ListAllCategories() throws SQLException {
+    public static List<DTOCategorias> ListAllCategories() throws SQLException {
         List<DTOCategorias> categorias = new ArrayList<DTOCategorias>();
 
         PreparedStatement query = SingletonConnection.GetDBConnection()
@@ -31,14 +31,10 @@ public class DAOCategorias {
             categorias.add(categoria);
         }
 
-        categorias.forEach(cat -> {
-            System.out.println(cat.getId());
-            System.out.println(cat.getNombre());
-        });
         return categorias;
     }
 
-    public List<DTOCategorias> GetCategoriaById(Integer categoriaId) throws SQLException {
+    public static List<DTOCategorias> GetCategoriaById(Integer categoriaId) throws SQLException {
         List<DTOCategorias> categorias = new ArrayList<DTOCategorias>();
 
         PreparedStatement query = SingletonConnection.GetDBConnection()
@@ -56,11 +52,7 @@ public class DAOCategorias {
 
             categorias.add(categoria);
         }
-        categorias.forEach(cat -> {
-            System.out.println("me pasaron "+categoriaId+" y devolvi: ");
-            System.out.println(cat.getId());
-            System.out.println(cat.getNombre());
-        });
+
         return categorias;
     }
 }

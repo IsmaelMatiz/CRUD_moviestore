@@ -6,6 +6,15 @@ public class DTOMovies {
     private String nombre;
     private String descripcion;
     private Integer unidadesDisponibles;
+    private DTOCategorias Categoria;
+
+    public DTOCategorias getCategoria() {
+        return Categoria;
+    }
+
+    public void setCategoria(DTOCategorias categoria) {
+        Categoria = categoria;
+    }
 
     public Integer getId() {
         return id;
