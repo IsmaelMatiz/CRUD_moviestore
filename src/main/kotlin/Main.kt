@@ -31,7 +31,5 @@ fun main() = application {
         Navigator(HomeV()) { navigator ->
             SlideTransition(navigator)
         }
-
-
     }
 }
