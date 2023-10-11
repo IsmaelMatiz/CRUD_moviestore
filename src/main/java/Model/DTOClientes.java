@@ -6,13 +6,6 @@ public class DTOClientes {
     private String telefono;
     private String direccion;
     private String correo;
-    public DTOClientes(Integer id_cliente, String nombres, String telefono, String direccion, String correo) {
-        this.id_cliente = id_cliente;
-        this.nombres = nombres;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.correo = correo;
-    }
 
     public DTOClientes() {
 

@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOClientes {
-    public List<DTOClientes> ListClientes() throws SQLException {
+    public List<DTOClientes> ListClientes(Integer idCliente) throws SQLException {
         List<DTOClientes> clientes = new ArrayList<>();
 
-        Connection connection = SingletonConnection.GetDBConnection();
 
-        PreparedStatement query = connection.prepareStatement("SELECT * FROM clientes");
+        PreparedStatement query = SingletonConnection.GetDBConnection()
+                .prepareStatement("SELECT * FROM clientes where id_cliente = ? ");
 
+        query.setInt(1,idCliente);
         ResultSet clientesDB = query.executeQuery();
 
         while (clientesDB.next()) {
@@ -29,8 +30,6 @@ public class DAOClientes {
 
             clientes.add(cliente);
         }
-
-        connection.close();
 
         return clientes;
     }

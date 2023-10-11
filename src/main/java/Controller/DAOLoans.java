@@ -9,21 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOLoans {
-    public List<DTOLoans> ListLoans() throws SQLException {
+    public List<DTOLoans> ListLoans(Integer idCliente) throws SQLException {
         ArrayList<DTOLoans> loans = new ArrayList<DTOLoans>();
 
         PreparedStatement query = SingletonConnection.GetDBConnection().prepareStatement("" +
-                "SELECT * FROM prestamos");
+                "SELECT * FROM prestamos where peliculas_clientes_id_cliente = ?");
 
+        query.setInt(1,idCliente);
         ResultSet moviesDB = query.executeQuery();
 
         while (moviesDB.next())
         {
             DTOLoans loan = new DTOLoans();
 
-            loan.setId(moviesDB.getInt("id"));
-            loan.setId_cliente(moviesDB.getInt("id_cliente"));
-            loan.setFecha_prestamo(moviesDB.getDate("fecha_prestamo").toLocalDate());
+            loan.setId(moviesDB.getInt("id_prestamo"));
+            loan.setFecha_prestamo(moviesDB.getDate("fecha_prestamos").toLocalDate());
             loan.setFecha_devolucion(moviesDB.getDate("fecha_devolucion").toLocalDate());
             loan.setPrecio(moviesDB.getDouble("precio"));
             loan.setPeliculas_id(moviesDB.getInt("peliculas_id"));
@@ -31,7 +31,6 @@ public class DAOLoans {
 
             loans.add(loan);
         }
-
         return loans;
     }
 }

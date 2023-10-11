@@ -10,15 +10,6 @@ public class DTOLoans {
     private Double precio;
     private Integer peliculas_id;
     private Integer peliculas_clientes_id_cliente;
-    public DTOLoans() {
-        this.id = id;
-        this.id_cliente = id_cliente;
-        this.fecha_prestamo = fecha_prestamo;
-        this.fecha_devolucion = fecha_devolucion;
-        this.precio = precio;
-        this.peliculas_id = peliculas_id;
-        this.peliculas_clientes_id_cliente = peliculas_clientes_id_cliente;
-    }
 
     public Integer getId() {
         return id;

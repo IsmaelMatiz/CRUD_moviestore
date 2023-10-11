@@ -36,27 +36,18 @@ class LoansV (): Screen {
                 )
                 {
                     Column(
-<<<<<<< HEAD
+
                         modifier = Modifier.fillMaxSize()
                     ) {
                             Button(onClick = {
-=======
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "loans SIUUU")
-                        Button(onClick = {
->>>>>>> ft_logic_loans
                             navigator.push(homeScreen)
                         }){
                             Text("Volver")
                         }
-<<<<<<< HEAD
+
                         //aqui wey empieza aqui
 
-=======
->>>>>>> ft_logic_loans
+
                     }
                 }
             }

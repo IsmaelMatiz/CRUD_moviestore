@@ -1,3 +1,5 @@
+import Controller.DAOClientes
+import Controller.DAOLoans
 import Views.HomeV
 import Views.LoansV
 import Views.MoviesV
