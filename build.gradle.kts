@@ -25,6 +25,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     implementation("com.mysql:mysql-connector-j:8.1.0")
 
+    //implementation("androidx.compose.material:material-*:1.1.0-alpha06")
+
+
     // https://mvnrepository.com/artifact/cafe.adriel.voyager/voyager-navigator
     runtimeOnly("cafe.adriel.voyager:voyager-navigator:1.0.0-rc05")
 
