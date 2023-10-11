@@ -1,4 +1,7 @@
+import Controller.DAOClientes
+import Controller.DAOLoans
 import Views.HomeV
+import Views.LoansV
 import Views.MoviesV
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
@@ -24,8 +27,11 @@ fun main() = application {
             register<SharedScreen.HomeV> {
                 HomeV()
             }
-            register<SharedScreen.moviesV> {
+            register<SharedScreen.MoviesV> {
                 MoviesV()
+            }
+            register<SharedScreen.LoansV> {
+                LoansV()
             }
         }
         Navigator(HomeV()) { navigator ->
