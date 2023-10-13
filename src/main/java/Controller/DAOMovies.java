@@ -1,8 +1,8 @@
 package Controller;
 
+
 import Model.DTOCategorias;
 import Model.DTOMovies;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,6 @@ public class DAOMovies {
 
         PreparedStatement query = SingletonConnection.GetDBConnection().prepareStatement("" +
                 "SELECT * FROM peliculas");
-        
 
         ResultSet moviesDB = query.executeQuery();
 
