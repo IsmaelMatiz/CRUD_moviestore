@@ -1,5 +1,6 @@
 package Views
 
+import AlertView
 import Controller.DAOCategorias
 import Controller.DAOMovies
 import Header
@@ -27,12 +28,18 @@ class MoviesV(): Screen {
     @Composable
     override fun Content() {
 
+        val openDialog = remember { mutableStateOf(false) }
         var testText by remember { mutableStateOf("algo") }
         var categorias = DAOCategorias.ListAllCategories()
         var movies = DAOMovies.ListMovies()
 
         MaterialTheme {
             Column {
+                if (openDialog.value){
+                    AlertView("mi super texto",categorias,{
+                        openDialog.value = false
+                    })
+                }
                 Column(
                     modifier = Modifier.weight(0.2f)
                 )
@@ -73,6 +80,9 @@ class MoviesV(): Screen {
                         ){
                             ViewButton("Agregar",{})
                             ViewButton("Actualizar",{})
+                            ViewButton("Alerta",{
+                                openDialog.value = true
+                            })
                         }
                     }
                     //tabla
@@ -80,7 +90,11 @@ class MoviesV(): Screen {
                         modifier = Modifier.weight(0.5f)
                     )
                     {
-                        ViewTable(movies)
+                        ViewTable(
+                            movies,
+                            {},
+                            {},
+                            categorias)
                     }
                 }
             }

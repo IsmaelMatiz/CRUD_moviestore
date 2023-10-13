@@ -252,10 +252,10 @@ fun ViewTextFieldReadOnly(labelField: String, insideText: String): String{
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun  ViewDropDownField (labelField: String,list: MutableList<DTOCategorias>): String{
+fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>): String{
 
     var isExpanded by remember {  mutableStateOf(false) }
-    var userElection by remember { mutableStateOf(labelField) }
+    var userElection by remember { mutableStateOf(defaulVal) }
 
 
     Box(){
@@ -265,7 +265,7 @@ fun  ViewDropDownField (labelField: String,list: MutableList<DTOCategorias>): St
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
             Text(
-                text = labelField,
+                text = "Categories",
                 fontWeight = FontWeight.SemiBold,
                 color = lBlue,
                 fontSize = 20.sp
@@ -305,22 +305,58 @@ fun  ViewDropDownField (labelField: String,list: MutableList<DTOCategorias>): St
     return userElection
 }
 
-
+/**
+ * @author Ismael Matiz
+ * @since Este componente muestra una lista scroleable en pantalla de movies
+ * si se desea cambia una simple sobrecarga de metodo cambiando el tipo del dato
+ * y como se accede a la info de ese tipo de dato mas abajo bastara
+ * @param listMovies La lista de peliculas a mostrar
+ */
 @Composable
-fun ViewTable(listMovies: MutableList<DTOMovies>){
+fun ViewTable(listMovies: MutableList<DTOMovies>,
+              editFun2: () -> Unit,
+              deleteFun: () -> Unit,
+              listCategories: MutableList<DTOCategorias>
+){
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         for (movie in listMovies){
-            ViewItemTable(movie.nombre,movie.categoria.nombre,movie.descripcion,{},{})
+            var listInfoMovie = arrayListOf(
+                movie.nombre.toString(),
+                movie.categoria.nombre.toString(),
+                movie.descripcion.toString(),
+                movie.unidadesDisponibles.toString(),
+                movie.categoria.nombre)
+            var editionMode = remember { mutableStateOf(false) }
+            ViewItemTable(movie.nombre,
+                movie.categoria.nombre,
+                movie.descripcion,
+                {editionMode.value = true},
+                {editFun2()},
+                {editionMode.value = false},
+                {deleteFun()},
+                editionMode.value,
+                listInfoMovie,
+                listCategories)
         }
     }
 }
 
 @Composable
-fun ViewItemTable(lMainText: String, lSubText: String, lDescription: String, editFun: () -> Unit, deleteFun: ()->Unit){
+fun ViewItemTable(lMainText: String,
+                  lSubText: String,
+                  lDescription: String,
+                  editFun: () -> Unit,
+                  editFun2: () -> Unit,
+                  editFun3: () -> Unit,
+                  deleteFun: ()->Unit,
+                  editionMode: Boolean,
+                  infoFields: ArrayList<String>,
+                  listCategories: MutableList<DTOCategorias>){
     Row(
         modifier = Modifier.padding(10.dp)
     ) {
@@ -332,45 +368,94 @@ fun ViewItemTable(lMainText: String, lSubText: String, lDescription: String, edi
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                Row {
-                    Text(
-                        text = lMainText,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                    Text(
-                        text = lSubText,
-                        fontSize = 10.sp,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(top = 8.dp, start = 5.dp)
-                    )
-                }
-                Text(lDescription)
-            }
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(5.dp)
-            )
-            {
-                IconButton(onClick = {
-                    editFun()
-                }){
-                    Icon(
-                        modifier = Modifier.size(size = 30.dp),
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Icono de editar"
-                    )
-                }
-                IconButton(onClick = {
-                    editFun()
-                }){
-                    Icon(
-                        modifier = Modifier.size(size = 30.dp),
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Icono de borrar"
-                    )
+                if (editionMode) {
+                    Row {
+                        Column {
+                            Row { ViewTextField("Nombre",infoFields.get(0),{})
+                                ViewTextField("Categoria",infoFields.get(1),{})
+                                ViewTextField("Descripcion",infoFields.get(2),{})
+                                ViewTextField("Units",infoFields.get(3),{})
+                                ViewDropDownField(infoFields.get(4),listCategories) }
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            )
+                            {
+                                ViewButton("Confirmar",{editFun2()})
+                                ViewButton("Cancelar",{editFun3()})
+                            }
+                        }
+                    }
+
+                } else {
+                    Row {
+                        Column {
+                            Row {
+                                Text(
+                                    text = lMainText,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                                Text(
+                                    text = lSubText,
+                                    fontSize = 10.sp,
+                                    color = Color.Gray,
+                                    modifier = Modifier.padding(top = 8.dp, start = 5.dp)
+                                )
+                            }
+                            Text(lDescription)
+                        }
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        )
+                        {
+                            IconButton(onClick = {
+                                editFun()
+                            }) {
+                                Icon(
+                                    modifier = Modifier.size(size = 30.dp),
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Icono de editar"
+                                )
+                            }
+                            IconButton(onClick = {
+                                deleteFun()
+                            }) {
+                                Icon(
+                                    modifier = Modifier.size(size = 30.dp),
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Icono de borrar"
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun AlertView(title: String, categorias : MutableList<DTOCategorias>,closeFun: () -> Unit){
+    AlertDialog(
+        title = {
+            Text(title)
+        },
+        text = {
+            Column {
+                ViewTextField("ISBN","Enter ISBN value",{})
+                ViewTextField("Name","Enter Name value",{})
+                ViewTextField("Description","Enter description value",{})
+                ViewTextField("Units","Enter Units value",{})
+                ViewDropDownField("Categorias",categorias)
+            }
+        },
+        onDismissRequest = { closeFun() },
+        confirmButton = {},
+        dismissButton = {
+            ViewButton("Cerrar",{ closeFun() })
+        },
+        modifier = Modifier.size(200.dp)
+    )
 }
 
