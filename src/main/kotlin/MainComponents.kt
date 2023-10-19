@@ -1,4 +1,5 @@
 import Controller.DAOCategorias
+import Controller.DAOMovies
 import Model.DTOCategorias
 import Model.DTOMovies
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -10,9 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,13 +26,16 @@ import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import navController.SharedScreen
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
+enum class projectObjects(){
+    MOVIES,
+    LOANS
+}
+
 
 @Composable
 @Preview
@@ -143,7 +145,8 @@ fun menuButton(buttonText : String,moveTo: () -> Unit){
  * @param buttonFunction la funcion a ejecutar cuando se oprima el boton
  */
 @Composable
-fun ViewButton(buttonText: String, buttonFunction: () -> Unit){
+fun ViewButton(buttonText: String, buttonFunction: () -> Unit)
+{
     Button(
         onClick = {buttonFunction()},
         colors = ButtonDefaults.buttonColors(
@@ -169,8 +172,45 @@ fun ViewButton(buttonText: String, buttonFunction: () -> Unit){
  * @return lo que ingreso el usuario como un String
  */
 @Composable
-fun ViewTextField(labelField: String, insideText: String,funLostFocus: () -> Unit): String{
+fun ViewTextField(labelField: String, insideText: String,funLostFocus: () -> Unit): String
+{
     var text by remember { mutableStateOf("") }
+    var countClick by remember { mutableStateOf(0) }
+    Column(
+        modifier = Modifier.size(200.dp)
+            .padding(10.dp)
+    ){
+        Text(
+            text = labelField,
+            fontWeight = FontWeight.SemiBold,
+            color = lBlue,
+            fontSize = 25.sp
+        )
+        OutlinedTextField(
+            value = text,
+            onValueChange = {text = it},
+            label = { Text(text = insideText, fontSize = 12.sp)},
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.White,
+                focusedIndicatorColor = Color.DarkGray,
+                unfocusedIndicatorColor = Color.Gray
+            ),
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.onFocusChanged {
+                if(!it.isFocused && countClick != 0){
+                    funLostFocus()
+                }
+                countClick++
+            }
+        )
+    }
+    return text
+}
+
+@Composable
+fun ViewTextField(labelField: String, insideText: String, insideValue: String,funLostFocus: () -> Unit): String
+{
+    var text by remember { mutableStateOf(insideValue) }
     var countClick by remember { mutableStateOf(0) }
     Column(
         modifier = Modifier.size(200.dp)
@@ -212,7 +252,8 @@ fun ViewTextField(labelField: String, insideText: String,funLostFocus: () -> Uni
  * @return lo que ingreso el usuario como un String
  */
 @Composable
-fun ViewTextFieldReadOnly(labelField: String, insideText: String): String{
+fun ViewTextFieldReadOnly(labelField: String, insideText: String): String
+{
     var text by remember { mutableStateOf(insideText) }
     Column(
         modifier = Modifier.size(200.dp)
@@ -252,10 +293,14 @@ fun ViewTextFieldReadOnly(labelField: String, insideText: String): String{
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>): String{
+fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>, defaulValId: Int): DTOCategorias
+{
 
-    var isExpanded by remember {  mutableStateOf(false) }
+    var defaulCat:DTOCategorias? = if (DAOCategorias.GetCategoriaById(defaulValId).size == 0) DTOCategorias() else
+        DAOCategorias.GetCategoriaById(defaulValId)[0]?:DTOCategorias()
+    var isExpanded by remember { mutableStateOf(false) }
     var userElection by remember { mutableStateOf(defaulVal) }
+    var userElection2 by remember { mutableStateOf<DTOCategorias>(defaulCat?:DTOCategorias()) }
 
 
     Box(){
@@ -293,6 +338,7 @@ fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>): St
                     onClick = {
                         userElection = item.nombre
                         isExpanded = false
+                        userElection2 = item
                               },
                     enabled = true
                 ){
@@ -302,7 +348,7 @@ fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>): St
         }
     }
 
-    return userElection
+    return userElection2
 }
 
 /**
@@ -314,8 +360,6 @@ fun  ViewDropDownField (defaulVal: String, list: MutableList<DTOCategorias>): St
  */
 @Composable
 fun ViewTable(listMovies: MutableList<DTOMovies>,
-              editFun2: () -> Unit,
-              deleteFun: () -> Unit,
               listCategories: MutableList<DTOCategorias>
 ){
 
@@ -325,25 +369,42 @@ fun ViewTable(listMovies: MutableList<DTOMovies>,
             .verticalScroll(rememberScrollState())
     ) {
         for (movie in listMovies){
-            var listInfoMovie = arrayListOf(
-                movie.nombre.toString(),
-                movie.categoria.nombre.toString(),
-                movie.descripcion.toString(),
-                movie.unidadesDisponibles.toString(),
-                movie.categoria.nombre)
+            var infoMovie = hashMapOf<String,String>(
+                "id" to movie.id.toString(),
+                "ISBN" to movie.isbn,
+                "nombre" to movie.nombre,
+                "descripcion" to movie.descripcion,
+                "unidades_disponibles" to movie.unidadesDisponibles.toString(),
+                "categoria_nombre" to movie.categoria.nombre,
+                "categoria_id" to movie.categoria.id.toString()
+            )
+
             var editionMode = remember { mutableStateOf(false) }
+
             ViewItemTable(movie.nombre,
                 movie.categoria.nombre,
                 movie.descripcion,
-                {editionMode.value = true},
-                {editFun2()},
-                {editionMode.value = false},
-                {deleteFun()},
+                { editionMode.value = true },
+                { editionMode.value = false },
                 editionMode.value,
-                listInfoMovie,
-                listCategories)
+                infoMovie,
+                listCategories,
+                movie.categoria
+            )
         }
     }
+}
+
+fun deleteObjectFun(id : String, objectToBeAffect : projectObjects) {
+    when (objectToBeAffect){
+        projectObjects.MOVIES -> DAOMovies.DeleteMovie(id.toInt())
+        else -> println("No object set to be edited")
+    }
+}
+
+fun editObjectFun(id: String, movieInfo : DTOMovies) {
+        println(movieInfo.toString())
+        DAOMovies.UpdateMovie(id.toInt(),movieInfo)
 }
 
 @Composable
@@ -351,12 +412,25 @@ fun ViewItemTable(lMainText: String,
                   lSubText: String,
                   lDescription: String,
                   editFun: () -> Unit,
-                  editFun2: () -> Unit,
                   editFun3: () -> Unit,
-                  deleteFun: ()->Unit,
                   editionMode: Boolean,
-                  infoFields: ArrayList<String>,
-                  listCategories: MutableList<DTOCategorias>){
+                  infoFields: HashMap<String,String>,
+                  listCategories: MutableList<DTOCategorias>,
+                  defaultCategory: DTOCategorias
+                  )
+{
+
+    val openDialog = remember { mutableStateOf(false) }
+    val newInfoMovie = remember { mutableStateMapOf(
+        "id" to infoFields.get("id"),
+        "ISBN" to infoFields.get("ISBN"),
+        "nombre" to infoFields.get("nombre"),
+        "descripcion" to infoFields.get("descripcion"),
+        "unidades_disponibles" to infoFields.get("unidades_disponibles")
+    ) }
+
+    val newCategoryInfo = remember { mutableStateOf<DTOCategorias>(defaultCategory) }
+
     Row(
         modifier = Modifier.padding(10.dp)
     ) {
@@ -367,27 +441,52 @@ fun ViewItemTable(lMainText: String,
             ,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            if (openDialog.value){
+                AlertView("Confirm deletion",
+                    "Are you sure that u want to delete '"+newInfoMovie["nombre"] +"' movie?",
+                    { openDialog.value = false },
+                    {
+                        deleteObjectFun(infoFields.get("id").toString(),projectObjects.MOVIES)
+                        openDialog.value = false
+                    })
+            }
             Column {
                 if (editionMode) {
                     Row {
                         Column {
-                            Row { ViewTextField("Nombre",infoFields.get(0),{})
-                                ViewTextField("Categoria",infoFields.get(1),{})
-                                ViewTextField("Descripcion",infoFields.get(2),{})
-                                ViewTextField("Units",infoFields.get(3),{})
-                                ViewDropDownField(infoFields.get(4),listCategories) }
+                            Row { newInfoMovie["nombre"] =  ViewTextField("Nombre", infoFields["nombre"].toString(),infoFields["nombre"].toString(),{})
+                                newInfoMovie["ISBN"] = ViewTextField("ISBN", infoFields["ISBN"].toString(),infoFields["ISBN"].toString(),{})
+                                newInfoMovie["descripcion"] = ViewTextField("Descripcion", infoFields["descripcion"].toString(), infoFields["descripcion"].toString(),{})
+                                newInfoMovie["unidades_disponibles"] = ViewTextField("Units", infoFields["unidades_disponibles"].toString(), infoFields["unidades_disponibles"].toString(),{})
+                                newCategoryInfo.value = ViewDropDownField(infoFields["categoria_nombre"].toString(),listCategories,newCategoryInfo.value.id)
+                            }
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(5.dp)
                             )
                             {
-                                ViewButton("Confirmar",{editFun2()})
+                                ViewButton("Confirmar",{
+                                    val newMovie = DTOMovies()
+                                    newMovie.id = infoFields["id"]?.toInt() ?: 0
+                                    newMovie.isbn = newInfoMovie["ISBN"]
+                                    newMovie.nombre = newInfoMovie["nombre"]
+                                    newMovie.descripcion = newInfoMovie["descripcion"]
+                                    newMovie.unidadesDisponibles = newInfoMovie["unidades_disponibles"]?.toInt() ?: 0
+                                    newMovie.categoria = newCategoryInfo.value
+                                    editObjectFun(infoFields["id"].toString(),newMovie)
+
+                                    editFun3()
+                                }
+                                )
                                 ViewButton("Cancelar",{editFun3()})
                             }
                         }
                     }
 
                 } else {
-                    Row {
+                    Row (
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
                         Column {
                             Row {
                                 Text(
@@ -418,7 +517,7 @@ fun ViewItemTable(lMainText: String,
                                 )
                             }
                             IconButton(onClick = {
-                                deleteFun()
+                                    openDialog.value = true
                             }) {
                                 Icon(
                                     modifier = Modifier.size(size = 30.dp),
@@ -436,26 +535,55 @@ fun ViewItemTable(lMainText: String,
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AlertView(title: String, categorias : MutableList<DTOCategorias>,closeFun: () -> Unit){
+fun AlertView(title: String, innerText : String,closeFun: () -> Unit, confirmFun: () -> Unit){
     AlertDialog(
         title = {
-            Text(title)
+            Text(
+                text =  title,
+                fontWeight = FontWeight.SemiBold,
+                color = lBlue,
+                fontSize = 18.sp
+            )
         },
         text = {
             Column {
-                ViewTextField("ISBN","Enter ISBN value",{})
-                ViewTextField("Name","Enter Name value",{})
-                ViewTextField("Description","Enter description value",{})
-                ViewTextField("Units","Enter Units value",{})
-                ViewDropDownField("Categorias",categorias)
+                Text(innerText)
             }
         },
         onDismissRequest = { closeFun() },
-        confirmButton = {},
+        confirmButton = {
+            ViewButton("Confirm",{ confirmFun() })
+        },
         dismissButton = {
-            ViewButton("Cerrar",{ closeFun() })
+            ViewButton("Cancel",{ closeFun() })
         },
         modifier = Modifier.size(200.dp)
     )
 }
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun AlertView(title: String, innerText : String,closeFun: () -> Unit){
+    AlertDialog(
+        title = {
+            Text(
+                text =  title,
+                fontWeight = FontWeight.SemiBold,
+                color = lBlue,
+                fontSize = 18.sp
+            )
+        },
+        text = {
+            Column {
+                Text(innerText)
+            }
+        },
+        onDismissRequest = { closeFun() },
+        confirmButton = {},
+        modifier = Modifier.size(200.dp)
+    )
+}
+
+
+
 
