@@ -55,4 +55,16 @@ public class DTOMovies {
     public void setUnidadesDisponibles(Integer unidadesDisponibles) {
         this.unidadesDisponibles = unidadesDisponibles;
     }
+
+    @Override
+    public String toString() {
+        return "DTOMovies{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", unidadesDisponibles=" + unidadesDisponibles +
+                ", Categoria=" + Categoria +
+                '}';
+    }
 }
