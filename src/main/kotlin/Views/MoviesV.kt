@@ -1,9 +1,12 @@
 package Views
 
+import AlertView
 import Controller.DAOCategorias
 import Controller.DAOMovies
 import Header
 import MiniHeader
+import Model.DTOCategorias
+import Model.DTOMovies
 import ViewButton
 import ViewDropDownField
 import ViewTable
@@ -11,13 +14,9 @@ import ViewTextField
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 
@@ -27,9 +26,15 @@ class MoviesV(): Screen {
     @Composable
     override fun Content() {
 
-        var testText by remember { mutableStateOf("algo") }
         var categorias = DAOCategorias.ListAllCategories()
-        var movies = DAOMovies.ListMovies()
+        var movies by remember { mutableStateOf(DAOMovies.ListMovies()) }
+        val movieToInsertInfo = remember { mutableStateMapOf(
+            "ISBN" to "",
+            "nombre" to "",
+            "descripcion" to "",
+            "unidadesDisponibles" to 0
+        ) }
+        val categoryInfo = remember { mutableStateOf<DTOCategorias>(DTOCategorias()) }
 
         MaterialTheme {
             Column {
@@ -52,15 +57,15 @@ class MoviesV(): Screen {
                     }
                     //campos
                     Row(
-                        modifier = Modifier.fillMaxWidth().weight(0.18f),
+                        modifier = Modifier.fillMaxWidth().weight(0.2f),
                         horizontalArrangement = Arrangement.SpaceBetween
                     )
                     {
-                        ViewTextField("ISBN","Enter ISBN value",{})
-                        ViewTextField("Name","Enter Name value",{})
-                        ViewTextField("Description","Enter description value",{})
-                        ViewTextField("Units","Enter Units value",{})
-                        testText = ViewDropDownField("Categorias",categorias)
+                        movieToInsertInfo["ISBN"] = ViewTextField("ISBN","Enter ISBN value",{})
+                        movieToInsertInfo["nombre"] = ViewTextField("Name","Enter Name value",{})
+                        movieToInsertInfo["descripcion"] = ViewTextField("Description","Enter description value",{})
+                        movieToInsertInfo["unidadesDisponibles"] = ViewTextField("Units","Enter Units value",{}).toIntOrNull()?:0
+                        categoryInfo.value = ViewDropDownField("Categorias",categorias,0)
                     }
                     // Botones
                     Row(
@@ -71,16 +76,29 @@ class MoviesV(): Screen {
                         Row (
                             horizontalArrangement = Arrangement.spacedBy(5.dp)
                         ){
-                            ViewButton("Agregar",{})
-                            ViewButton("Actualizar",{})
+                            ViewButton("Agregar",{
+                                var movieToInsert = DTOMovies()
+                                movieToInsert.isbn = movieToInsertInfo["ISBN"].toString()
+                                movieToInsert.nombre = movieToInsertInfo["nombre"].toString()
+                                movieToInsert.descripcion = movieToInsertInfo["descripcion"].toString()
+                                movieToInsert.unidadesDisponibles = movieToInsertInfo["unidadesDisponibles"].toString().toInt()
+                                movieToInsert.categoria = categoryInfo.value
+
+                                DAOMovies.InsertMovie(movieToInsert)
+                            })
+                            ViewButton("Actualizar",{
+                                movies = DAOMovies.ListMovies()
+                            })
                         }
                     }
                     //tabla
                     Row(
-                        modifier = Modifier.weight(0.5f)
+                        modifier = Modifier.weight(0.48f)
                     )
                     {
-                        ViewTable(movies)
+                        ViewTable(
+                            movies,
+                            categorias)
                     }
                 }
             }

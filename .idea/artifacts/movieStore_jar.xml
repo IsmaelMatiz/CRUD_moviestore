@@ -1,0 +1,40 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="movieStore:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/movieStore_jar</output-path>
+    <root id="archive" name="movieStore.jar">
+      <element id="module-output" name="movieStore.main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.material/material-icons-core-desktop/1.4.0/26323c8bdd56b7587adb49ccde9b54f6c6d4f66c/material-icons-core-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.foundation/foundation-layout-desktop/1.4.0/44bda1fbc6d0b1de6b1683310824ddc3f94130ed/foundation-layout-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.material/material-desktop/1.4.0/8f9a30a473e700f5c3bfdd16706a4850ba8829b3/material-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-desktop/1.4.0/bf6d2c7e90929ea942c635e54df9a7fa0c2ed762/ui-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.8.20/5eddaaf234c8c49d03eebeb6a14feb7f90faca71/kotlin-stdlib-common-1.8.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.8.20/3aa51faf20aae8b31e1a4bc54f8370673d7b7df4/kotlin-stdlib-jdk7-1.8.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-navigator-desktop/1.0.0-rc05/220e4f3709caa83f76a9f4de550411e55f86ba78/voyager-navigator-desktop-1.0.0-rc05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.runtime/runtime-desktop/1.4.0/58aa541b2989d6e8625ddd4c61f53da05df25d81/runtime-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-graphics-desktop/1.4.0/8044beffd18135160db4274cc1178d7b2c3631f8/ui-graphics-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.animation/animation-desktop/1.4.0/8cd1252c46d289362e4e869a3b9be426ba177440/animation-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-tab-navigator-desktop/1.0.0-rc05/c7f758163d3218fab66e03ec33df222012059d6c/voyager-tab-navigator-desktop-1.0.0-rc05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-core-desktop/1.0.0-rc05/fee752c4415f0ce49e8e36dc2d142cc11c28d63e/voyager-core-desktop-1.0.0-rc05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.runtime/runtime-saveable-desktop/1.4.0/2bb14fd8fe4ab551a04330a4431187de2ecb1c2a/runtime-saveable-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.21.9/ed1240d9231044ce6ccf1978512f6e44416bb7e7/protobuf-java-3.21.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.desktop/desktop-jvm/1.4.0/922ebea5ab9e202ee66ab4f4f567a74184eddbc1/desktop-jvm-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.skiko/skiko-awt/0.7.58/a95d1e2d8765e9b9b7d248b1a70e220223ab2cfe/skiko-awt-0.7.58.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-util-desktop/1.4.0/3c3db20f77732f5874778c90cb589aba74ca81f3/ui-util-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysql/mysql-connector-j/8.1.0/3f78d2963935f44a61edb3961a591cdc392c8941/mysql-connector-j-8.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-jvm/0.17.0/d3d2e380b6ee28231118101d09ae6dd06a1db1cb/atomicfu-jvm-0.17.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.8.20/e72fc5e03ec6c064c678a6bd0d955c88d55b0c4a/kotlin-stdlib-1.8.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.6.4/2c997cd1c0ef33f3e751d3831929aeff1390cb30/kotlinx-coroutines-core-jvm-1.6.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.foundation/foundation-desktop/1.4.0/4456fbe422fdfb6fedcb133bd1f419a70c72d858/foundation-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-geometry-desktop/1.4.0/81ea1ab414ba9926972708e9f4ca7ac499cd9137/ui-geometry-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-tooling-preview-desktop/1.4.0/16e8e3a0dd0d52b5e4877a54bc345668ba23428d/ui-tooling-preview-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-text-desktop/1.4.0/c6b2c278b01c01d69afe645887c6b85447c00c22/ui-text-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.animation/animation-core-desktop/1.4.0/50f1fd2b01cc30401d48f03c40dedf198e65de6f/animation-core-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.8.20/73576ddf378c5b4f1f6b449fe6b119b8183fc078/kotlin-stdlib-jdk8-1.8.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.skiko/skiko-awt-runtime-windows-x64/0.7.58/47955d864ac554609daa7b95a735fdbe362398fb/skiko-awt-runtime-windows-x64-0.7.58.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.material/material-ripple-desktop/1.4.0/e87cbd225bc99637e4eff9df32b82e70c2fcfb46/material-ripple-desktop-1.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/cafe.adriel.voyager/voyager-transitions-desktop/1.0.0-rc05/872f2ac68126f4a8f5480fb8dc1b5a05a153e49e/voyager-transitions-desktop-1.0.0-rc05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.ui/ui-unit-desktop/1.4.0/eafab6bed71d6b454f057a04897b5690608cab18/ui-unit-desktop-1.4.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
