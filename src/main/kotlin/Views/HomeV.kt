@@ -2,7 +2,6 @@ package Views
 
 import Header
 import menuButton
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +24,8 @@ class HomeV(): Screen {
         val navigator = LocalNavigator.currentOrThrow
         val movieScreen = rememberScreen(SharedScreen.MoviesV)
         val loansScreen = rememberScreen(SharedScreen.LoansV)
+        val clientScreen = rememberScreen(SharedScreen.ClientV)
+
 
         MaterialTheme {
             Column {
@@ -47,6 +48,7 @@ class HomeV(): Screen {
 
                         menuButton("Loans",{navigator.push(loansScreen)})
                         menuButton("Movies",{navigator.push(movieScreen)})
+                        menuButton("Client",{navigator.push(clientScreen)})
                     }
                 }
             }

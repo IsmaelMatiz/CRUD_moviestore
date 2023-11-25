@@ -1,5 +1,4 @@
-import Controller.DAOClientes
-import Controller.DAOLoans
+import Views.ClientV
 import Views.HomeV
 import Views.LoansV
 import Views.MoviesV
@@ -7,7 +6,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.*
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -33,6 +35,10 @@ fun main() = application {
             register<SharedScreen.LoansV> {
                 LoansV()
             }
+            register<SharedScreen.ClientV> {
+                ClientV()
+            }
+
         }
         Navigator(HomeV()) { navigator ->
             SlideTransition(navigator)
