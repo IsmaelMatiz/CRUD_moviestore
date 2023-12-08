@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class DTOLoans {
     private Integer id;
-    private Integer id_cliente;
     private LocalDate fecha_prestamo;
     private LocalDate fecha_devolucion;
     private Double precio;
@@ -17,14 +16,6 @@ public class DTOLoans {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(Integer id_cliente) {
-        this.id_cliente = id_cliente;
     }
 
     public LocalDate getFecha_prestamo() {
