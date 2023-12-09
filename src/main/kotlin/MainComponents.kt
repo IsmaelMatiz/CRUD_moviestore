@@ -1,6 +1,8 @@
 import Controller.DAOCategorias
+import Controller.DAOLoans
 import Controller.DAOMovies
 import Model.DTOCategorias
+import Model.DTOLoans
 import Model.DTOMovies
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
@@ -31,6 +33,9 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 enum class projectObjects(){
     MOVIES,
     LOANS
@@ -395,6 +400,40 @@ fun ViewTable(listMovies: MutableList<DTOMovies>,
     }
 }
 
+//VIEW TABLE LOANS
+@Composable
+fun ViewTable(listLoans: MutableList<DTOLoans>
+){
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        for (Loan in listLoans){
+            var infoMovie = hashMapOf<String,String>(
+                "id_prestamo" to Loan.id.toString(),
+                "fecha_prestamos" to Loan.fecha_prestamo.toString(),
+                "fecha_devolucion" to Loan.fecha_devolucion.toString(),
+                "precio" to Loan.precio.toString(),
+                "peliculas_id" to Loan.peliculas_id.toString(),
+                "peliculas_clientes_id_cliente" to Loan.peliculas_clientes_id_cliente.toString()
+            )
+
+            var editionMode = remember { mutableStateOf(false) }
+
+            ViewItemTable(Loan.peliculas_id.toString(),
+                Loan.fecha_prestamo.toString(),
+                Loan.fecha_devolucion.toString(),
+                { editionMode.value = true },
+                { editionMode.value = false },
+                editionMode.value,
+                infoMovie
+            )
+        }
+    }
+}
+
+
 fun deleteObjectFun(id : String, objectToBeAffect : projectObjects) {
     when (objectToBeAffect){
         projectObjects.MOVIES -> DAOMovies.DeleteMovie(id.toInt())
@@ -532,6 +571,134 @@ fun ViewItemTable(lMainText: String,
         }
     }
 }
+
+// Itemtable de Loans
+
+@Composable
+fun ViewItemTable(fecha_prestamos: String,
+                  fecha_devolucion: String,
+                  lDescription: String,
+                  editFun: () -> Unit,
+                  editFun3: () -> Unit,
+                  editionMode: Boolean,
+                  infoFields: HashMap<String,String>
+)
+{
+
+    val openDialog = remember { mutableStateOf(false) }
+    val newInfoMovie = remember { mutableStateMapOf(
+        "id_prestamo" to infoFields.get("id_prestamo"),
+        "fecha_prestamos" to infoFields.get("fecha_prestamos"),
+        "fecha_devolucion" to infoFields.get("fecha_devolucion"),
+        "precio" to infoFields.get("precio"),
+        "peliculas_id" to infoFields.get("peliculas_id"),
+        "peliculas_clientes_id_cliente" to infoFields.get("peliculas_clientes_id_cliente")
+    ) }
+
+
+    Row(
+        modifier = Modifier.padding(10.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .border(2.dp, Color.Gray)
+                .padding(15.dp)
+            ,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            if (openDialog.value){
+                AlertView("Confirm deletion",
+                    "Are you sure that u want to delete '"+newInfoMovie["id_prestamo"] +"' loan?",
+                    { openDialog.value = false },
+                    {
+                        DAOLoans.DeleteLoan(newInfoMovie["id_prestamo"]?.toInt())
+                        openDialog.value = false
+                    })
+            }
+            Column {
+                if (editionMode) {
+                    Row {
+                        Column {
+                            Row { newInfoMovie["fecha_prestamos"] = ViewTextField("fecha_prestamos", infoFields["fecha_prestamos"].toString(),infoFields["fecha_prestamos"].toString(),{})
+                                newInfoMovie["fecha_devolucion"] = ViewTextField("fecha_devolucion", infoFields["fecha_devolucion"].toString(), infoFields["fecha_devolucion"].toString(),{})
+                                newInfoMovie["precio"] = ViewTextField("precio", infoFields["precio"].toString(), infoFields["precio"].toString(),{})
+                                newInfoMovie["peliculas_id"] = ViewTextField("peliculas_id", infoFields["peliculas_id"].toString(), infoFields["peliculas_id"].toString(),{})
+                                newInfoMovie["peliculas_clientes_id_cliente"] = ViewTextField("Id Cliente", infoFields["peliculas_clientes_id_cliente"].toString(), infoFields["peliculas_clientes_id_cliente"].toString(),{})
+                            }
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            )
+                            {
+                                ViewButton("Confirmar",{
+                                    val newMovie = DTOLoans()
+                                    val fechaP = LocalDate.parse(newInfoMovie["fecha_prestamos"])
+                                    val fechaD = LocalDate.parse(newInfoMovie["fecha_devolucion"])
+                                    newMovie.id = infoFields["id_prestamo"]?.toInt() ?: 0
+                                    newMovie.fecha_prestamo = fechaP
+                                    newMovie.fecha_devolucion = fechaD
+                                    newMovie.precio = newInfoMovie["precio"]?.toDouble()
+                                    newMovie.peliculas_id = newInfoMovie["peliculas_id"]?.toInt() ?: 0
+                                    newMovie.peliculas_clientes_id_cliente = newInfoMovie["id_prestamo"]?.toInt()
+
+                                    DAOLoans.UpdateLoan(newMovie.id, newMovie)
+                                }
+                                )
+                                ViewButton("Cancelar",{editFun3()})
+                            }
+                        }
+                    }
+
+                } else {
+                    Row (
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        Column {
+                            Row {
+                                Text(
+                                    text = fecha_prestamos,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                                Text(
+                                    text = fecha_devolucion,
+                                    fontSize = 10.sp,
+                                    color = Color.Gray,
+                                    modifier = Modifier.padding(top = 8.dp, start = 5.dp)
+                                )
+                            }
+                            Text(lDescription)
+                        }
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        )
+                        {
+                            IconButton(onClick = {
+                                editFun()
+                            }) {
+                                Icon(
+                                    modifier = Modifier.size(size = 30.dp),
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Icono de editar"
+                                )
+                            }
+                            IconButton(onClick = {
+                                openDialog.value = true
+                            }) {
+                                Icon(
+                                    modifier = Modifier.size(size = 30.dp),
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Icono de borrar"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
