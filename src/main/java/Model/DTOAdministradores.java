@@ -1,19 +1,19 @@
 package Model;
 
 public class DTOAdministradores {
-    private Integer id_cliente;
+    private Integer id;
     private String nombres;
     private String telefono;
     private String direccion;
     private String correo;
     private String clave;
 
-    public Integer getId_cliente() {
-        return id_cliente;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_cliente(Integer id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombres() {

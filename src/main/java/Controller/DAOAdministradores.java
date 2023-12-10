@@ -1,7 +1,9 @@
 package Controller;
 
+import Model.DTOAdministradores;
 import Model.DTOClientes;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +34,26 @@ public class DAOAdministradores {
         }
         //Usuario Incorrecto o Error
         return 2;
+    }
+
+    public static void InsertManager(DTOAdministradores InfoAdmin){
+        try(Connection con = SingletonConnection.GetDBConnection()) {
+            PreparedStatement statement= con.prepareStatement("" +
+                    "INSERT INTO adminitrador(nombres,correos,telefono,direccion,clave) " +
+                    "VALUES(?,?,?,?,?)");
+            statement.setString(1,InfoAdmin.getNombres());
+            statement.setString(2,InfoAdmin.getCorreo());
+            statement.setString(3,InfoAdmin.getTelefono());
+            statement.setString(4,InfoAdmin.getDireccion());
+            statement.setString(5,String.valueOf(InfoAdmin.getClave().hashCode()));
+
+            statement.execute();
+            JOptionPane.showMessageDialog(null, "Administrador insertado");
+
+
+        }catch (Exception e){
+            System.out.println("error al insertar un administrador: "+e);
+        }
     }
 
     /*
