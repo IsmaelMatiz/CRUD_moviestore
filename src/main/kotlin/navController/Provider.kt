@@ -7,7 +7,5 @@ sealed class SharedScreen : ScreenProvider {
     object HomeV : SharedScreen()
     object MoviesV : SharedScreen()
     object LoansV : SharedScreen()
-
     object ManagerV : SharedScreen()
-
 }

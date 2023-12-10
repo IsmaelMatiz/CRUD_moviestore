@@ -2,7 +2,6 @@ package Views
 
 import Header
 import menuButton
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +48,6 @@ class HomeV(): Screen {
                         menuButton("Loans",{navigator.push(loansScreen)})
                         menuButton("Movies",{navigator.push(movieScreen)})
                         menuButton("Manager",{navigator.push(managerScreen)})
-
                     }
                 }
             }
