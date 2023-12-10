@@ -25,7 +25,7 @@ fun main() = application {
         title = storeName,
         icon = painterResource(logoPaht)
     ) {
-        ScreenRegistry{
+        ScreenRegistry {
             register<SharedScreen.HomeV> {
                 HomeV()
             }
@@ -37,7 +37,7 @@ fun main() = application {
             }
             register<SharedScreen.ManagerV> {
                 ManagerV()
-
+            }
             register<SharedScreen.LoginV> {
                 LoginV()
             }
