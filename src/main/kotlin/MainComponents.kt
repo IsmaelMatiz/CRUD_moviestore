@@ -61,6 +61,37 @@ val semidBlue = Color(0Xff414BB2)
  */
 @Composable
 fun Header(){
+    val navigator = LocalNavigator.currentOrThrow
+    val loginScreen = rememberScreen(SharedScreen.LoginV)
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(dBlue),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Box {
+            Text(
+                text = storeName,
+                style = TextStyle(fontFamily = FontFamily.Default,fontSize = 100.sp, color = Color.White, fontWeight = FontWeight.Bold),
+                modifier = Modifier.padding( start = 110.dp, top = 10.dp)
+            )
+            Image(
+                painter = painterResource(logoPaht),
+                contentDescription = "Logo de la tienda",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(150.dp)
+            )
+        }
+
+        ViewButton("Cerrar Sesion",{
+            navigator.push(loginScreen)
+        })
+    }
+}
+
+@Composable
+fun Header1(){
     Row (
         modifier = Modifier
             .fillMaxWidth()
