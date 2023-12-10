@@ -2,6 +2,7 @@ import Controller.DAOClientes
 import Controller.DAOLoans
 import Views.HomeV
 import Views.LoansV
+import Views.ManagerV
 import Views.LoginV
 import Views.MoviesV
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -34,6 +35,9 @@ fun main() = application {
             register<SharedScreen.LoansV> {
                 LoansV()
             }
+            register<SharedScreen.ManagerV> {
+                ManagerV()
+
             register<SharedScreen.LoginV> {
                 LoginV()
             }

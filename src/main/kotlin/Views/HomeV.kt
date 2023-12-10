@@ -25,6 +25,7 @@ class HomeV(): Screen {
         val navigator = LocalNavigator.currentOrThrow
         val movieScreen = rememberScreen(SharedScreen.MoviesV)
         val loansScreen = rememberScreen(SharedScreen.LoansV)
+        val managerScreen = rememberScreen(SharedScreen.ManagerV)
 
         MaterialTheme {
             Column {
@@ -47,6 +48,8 @@ class HomeV(): Screen {
 
                         menuButton("Loans",{navigator.push(loansScreen)})
                         menuButton("Movies",{navigator.push(movieScreen)})
+                        menuButton("Manager",{navigator.push(managerScreen)})
+
                     }
                 }
             }
