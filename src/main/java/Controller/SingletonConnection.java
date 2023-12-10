@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class SingletonConnection {
     private static Connection connection;
-    private static final String url = "jdbc:mysql://gmovile-db-movie-store.mysql.database.azure.com/moviestore";
-    private static final String user = "peers";
-    private static final String password = "AppMoviles2023";
+    private static final String url = "jdbc:mysql://final-stage-sena.mysql.database.azure.com/moviestore";
+    private static final String user = "admins";
+    private static final String password = "r#M4o8%A!u724Cuny5";
 
     private SingletonConnection(){}
 

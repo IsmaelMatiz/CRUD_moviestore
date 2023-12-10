@@ -1,6 +1,8 @@
 import Views.ClientV
 import Views.HomeV
 import Views.LoansV
+import Views.ManagerV
+import Views.LoginV
 import Views.MoviesV
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
@@ -25,7 +27,7 @@ fun main() = application {
         title = storeName,
         icon = painterResource(logoPaht)
     ) {
-        ScreenRegistry{
+        ScreenRegistry {
             register<SharedScreen.HomeV> {
                 HomeV()
             }
@@ -35,12 +37,15 @@ fun main() = application {
             register<SharedScreen.LoansV> {
                 LoansV()
             }
-            register<SharedScreen.ClientV> {
-                ClientV()
+            register<SharedScreen.ManagerV> {
+                ManagerV()
+            }
+            register<SharedScreen.LoginV> {
+                LoginV()
             }
 
         }
-        Navigator(HomeV()) { navigator ->
+        Navigator(LoginV()) { navigator ->
             SlideTransition(navigator)
         }
     }
